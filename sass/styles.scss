@@ -1,0 +1,52 @@
+body {
+  // overflow: hidden;
+  margin: 0;
+  main {
+    section {
+      &.login {
+        box-sizing: border-box;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 10%;
+
+        gap: 100px;
+
+        .title {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          align-items: center;
+
+          p {
+            margin: 0;
+            padding: 0;
+
+            &:nth-child(1) {
+              flex-grow: 1;
+              font-size: 2rem;
+            }
+
+            &:nth-child(2) {
+              flex-grow: 2;
+              font-size: 3rem;
+            }
+          }
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+      }
+
+      &.menu,
+      &.edit {
+        display: none;
+      }
+    }
+  }
+}
