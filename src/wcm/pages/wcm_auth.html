@@ -4,16 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../wcm/css/wcm_auth.css" />
     <title>WCM</title>
   </head>
   <body>
     <header></header>
     <main>
       <h1>WCM Login</h1>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" />
-      <button id="registerBtn">Register</button>
-      <button id="loginBtn">Login</button>
+      <p class="error hidden" id="error">Wrong password</p>
+      <form action="/wcm/auth" method="post" id="auth_form">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" />
+        <input
+          type="submit"
+          value="register"
+          id="register"
+          formaction="/wcm/register"
+        />
+        <input type="submit" value="login" id="login" />
+      </form>
     </main>
     <footer></footer>
   </body>

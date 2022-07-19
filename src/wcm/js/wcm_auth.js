@@ -1,89 +1,53 @@
-async function getRequest() {
-  let response = await fetch("/get");
-  let data = await response.text();
+async function auth(isLogin) {
+  const url = "/wcm/auth";
+  const password = passwordInput.value;
+
+  const obj = {
+    password: password,
+    isLogin: isLogin,
+    js: true,
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(obj),
+  };
+
+  const response = await fetch(url, options);
+  let data = await response.json();
   console.log(data);
+
+  if (data.result) {
+    form.submit();
+  } else {
+    errorMsg.classList.add("hidden");
+    setTimeout(() => {
+      errorMsg.classList.remove("hidden");
+    }, 500);
+  }
 }
 
-async function postRequest() {
-  const options = {
-    method: "POST",
-    body: JSON.stringify({ msg: "coucou" }),
-    headers: {
-      //Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
+const passwordInput = document.querySelector("#password");
+const registerBtn = document.querySelector("#register");
+const loginBtn = document.querySelector("#login");
+const form = document.querySelector("#auth_form");
+const errorMsg = document.querySelector("#error");
 
-  const response = await fetch("/post", options);
-  let data = await response.text();
-  console.log(JSON.parse(data));
-}
+registerBtn.addEventListener("click", async function (e) {
+  e.preventDefault();
+  await auth(false);
+});
 
-async function putRequest() {
-  const obj = {
-    fileName: "putFile.md",
-    content: "# This is a file created by a PUT request from the client",
-  };
-
-  const options = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(obj),
-  };
-
-  const response = await fetch("/put", options);
-  let data = await response.text();
-  console.log(JSON.parse(data));
-}
-
-async function register(user, pass) {
-  const url = "/register";
-
-  const obj = {
-    username: user,
-    password: pass,
-  };
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(obj),
-  };
-
-  const response = await fetch(url, options);
-  let data = await response.text();
-  console.log(JSON.parse(data));
-}
-
-async function login(user, pass) {
-  const url = "/login";
-
-  const obj = {
-    username: user,
-    password: pass,
-  };
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(obj),
-  };
-
-  const response = await fetch(url, options);
-  let data = await response.text();
-  console.log(JSON.parse(data));
-}
+loginBtn.addEventListener("click", async function (e) {
+  e.preventDefault();
+  await auth(true);
+});
 
 //getRequest();
 //postRequest();
 //putRequest();
 //register();
 //login();
-
-console.log(Date.now() / 1000);

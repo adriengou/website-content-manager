@@ -38,30 +38,30 @@ app.get("/wcm", async function (req, res) {
 });
 
 //Admin register POST request
-app.post("/adminregister", async function (req, res) {
+app.post("/wcm/auth", async function (req, res) {
   console.log("--------------Admin register POST request---------------");
   console.log(req.body);
 
   let password = req.body.password;
   console.log(`Password: ${JSON.stringify(req.body)}`);
-  let result = await admin.register(password);
-  console.log("RESULT: " + result);
-  res.send({
-    body: req.body,
-    result: result,
-  });
-});
 
-//Admin login POST request
-app.post("/adminlogin", async function (req, res) {
-  console.log("--------------Admin register POST request---------------");
-  console.log(req.body);
+  let result;
 
-  let password = req.body.password;
-  let result = await admin.login(password);
+  if (req.body.isLogin) {
+    result = await admin.login(password);
+  } else {
+    result = await admin.register(password);
+  }
+
   console.log("RESULT: " + result);
-  if (result) {
-    res.send(await render("wcm_panel"));
+
+  if (req.body.js) {
+    res.send({
+      body: req.body,
+      result: result,
+    });
+  } else if (result) {
+    res.send(renderWcm("wcm_panel"));
   }
 });
 
