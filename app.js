@@ -28,40 +28,47 @@ async function renderWcm(path) {
 //Json middleware
 app.use(express.json());
 
+//forms middleware
+app.use(express.urlencoded({ extended: true }));
+
 //Index.html GET request
 app.get("/", async function (req, res) {
   res.send(await renderWebsite("index"));
 });
 
 app.get("/wcm", async function (req, res) {
-  res.send(await renderWcm("wcm_auth"));
+  // res.send(await renderWcm("wcm_auth"));
+  res.send(await renderWcm("wcm_panel"));
 });
 
 //Admin register POST request
-app.post("/wcm/auth", async function (req, res) {
+app.post("/wcm", async function (req, res) {
   console.log("--------------Admin register POST request---------------");
-  console.log(req.body);
+  console.log(`Request body:\n${JSON.stringify(req.body)}`);
 
   let password = req.body.password;
-  console.log(`Password: ${JSON.stringify(req.body)}`);
 
   let result;
 
   if (req.body.isLogin) {
     result = await admin.login(password);
+    console.log("Login request");
   } else {
     result = await admin.register(password);
+    console.log("Register request");
   }
 
   console.log("RESULT: " + result);
 
   if (req.body.js) {
+    console.log("fetch request");
     res.send({
       body: req.body,
       result: result,
     });
   } else if (result) {
-    res.send(renderWcm("wcm_panel"));
+    console.log("form request");
+    res.send(await renderWcm("wcm_panel"));
   }
 });
 

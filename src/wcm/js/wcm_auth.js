@@ -1,6 +1,14 @@
 async function auth(isLogin) {
-  const url = "/wcm/auth";
+  console.log(form.submit);
+  let formData = new FormData(form);
+  for (const entry of formData.entries()) {
+    console.log(entry);
+  }
+
+  const url = "/wcm";
   const password = passwordInput.value;
+
+  isLoginInput.value = isLogin;
 
   const obj = {
     password: password,
@@ -21,8 +29,14 @@ async function auth(isLogin) {
   console.log(data);
 
   if (data.result) {
-    form.submit();
+    document.createElement("form").submit.call(form);
   } else {
+    if (!isLogin) {
+      errorMsg.textContent = "Mot de passe déja crée !";
+    } else {
+      errorMsg.textContent = "Mauvais mot de passe !";
+    }
+
     errorMsg.classList.add("hidden");
     setTimeout(() => {
       errorMsg.classList.remove("hidden");
@@ -33,6 +47,7 @@ async function auth(isLogin) {
 const passwordInput = document.querySelector("#password");
 const registerBtn = document.querySelector("#register");
 const loginBtn = document.querySelector("#login");
+const isLoginInput = document.querySelector("#isLogin");
 const form = document.querySelector("#auth_form");
 const errorMsg = document.querySelector("#error");
 
