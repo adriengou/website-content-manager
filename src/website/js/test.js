@@ -1,1 +1,0 @@
-alert("ici test.js");

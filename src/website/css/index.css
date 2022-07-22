@@ -1,0 +1,40 @@
+main {
+  padding-top: 20vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10%;
+}
+
+.logos {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2%;
+}
+
+.logos img {
+  width: 8%;
+}
+
+#arrow {
+  width: 5%;
+}
+
+.home_text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home_text p {
+  font-size: 2rem;
+}
+
+main a {
+  font-size: 1.5rem;
+  padding: 1.25% 2.5%;
+}

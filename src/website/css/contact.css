@@ -1,0 +1,48 @@
+main {
+    padding-top: 10vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10%;
+}
+
+
+.socials {
+    height: 50%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.card {
+    width: 25%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    border-radius: 10px;
+}
+
+.card img {
+    width: 50%;
+}
+
+.cv_card_text {
+    width: 100%;
+}
+
+.card p {
+    width: 95%;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.card a {
+    font-size: 1.5rem;
+    padding: 5% 10%;
+}

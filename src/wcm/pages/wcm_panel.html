@@ -4,18 +4,37 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="1" />
+    <!-- <meta http-equiv="refresh" content="1" /> -->
     <link rel="stylesheet" href="../../wcm/css/wcm_panel.css" />
     <title>WCM Panel</title>
   </head>
   <body>
     <main>
       <!-- Menu -->
-      <section class="menu" id="menu">
-        <button class="menu_button">Modifier vos pages</button>
-        <button class="menu_button">Ajouter des produits</button>
+      <section id="menu">
+        <button id="page_button" class="menu_button">Modifier vos pages</button>
+        <button id="products_button" class="menu_button">
+          Ajouter des produits
+        </button>
+      </section>
+      <section id="pages" class="hidden">
+        <button class="back_button">Retour</button>
+      </section>
+      <section id="products" class="hidden">
+        <button class="back_button">Retour</button>
+      </section>
+      <section id="modif" class="hidden">
+        <div class="controls">
+          <button>Retour</button>
+          <button>Sauvegarder</button>
+          <button></button>
+          <iframe src="/about"></iframe>
+        </div>
       </section>
     </main>
+    <template>
+      <button class="page_name_button" id="page_name_button_temp"></button>
+    </template>
   </body>
 
   <script type="module" src="../../wcm/js/wcm_panel.js"></script>

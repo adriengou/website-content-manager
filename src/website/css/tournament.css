@@ -1,0 +1,212 @@
+main {
+  overflow: hidden;
+  scroll-behavior: smooth;
+
+  padding-top: 10vh;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tournament_section {
+  flex-shrink: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tournament_section a,
+.tournament_section button {
+  display: block;
+  font-size: 1.5rem;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  width: 10%;
+  margin-bottom: 1%;
+}
+
+.title {
+  font-size: 2.5rem;
+}
+
+/* SETTINGS ------------------------------------------------- */
+
+.form {
+  width: 100%;
+  height: 50%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 6%;
+}
+
+.form .column {
+  /* background-color: coral; */
+
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7%;
+
+  font-size: 2rem;
+}
+
+.column input,
+.column textarea {
+  line-height: 2rem;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 5%;
+}
+
+.row input,
+.row div,
+.row select,
+.right_column textarea {
+  width: 30%;
+  font-size: 1.5rem;
+
+  color: #ccd6f6;
+}
+
+.row input,
+.row select,
+.right_column textarea,
+.row input:focus,
+.row select:focus,
+.right_column textarea:focus {
+  outline: none;
+  border-style: none;
+  background-color: #112240;
+}
+
+.row div {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+.row input[type="checkbox"] {
+  margin: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.row select::after {
+  padding-right: 5%;
+}
+
+.right_column textarea {
+  height: 54%;
+}
+
+/* GROUP ----------------------------------------------- */
+
+.button_wrapper {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  gap: 1%;
+}
+
+#description {
+  font-size: 2rem;
+}
+
+#card_group {
+  width: 100%;
+  height: 40%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.card {
+  width: 20%;
+  background-color: #112240;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 5%;
+}
+
+.card_title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  font-size: 1.5rem;
+  height: 25%;
+}
+
+.arrow {
+  width: 100%;
+  height: 50%;
+}
+
+.small {
+  float: left;
+  position: relative;
+
+  left: 25%;
+
+  width: 50%;
+  height: 100%;
+
+  background-color: #112240;
+
+  clip-path: polygon(0% 0%, 100% 0%, 50% 50%);
+
+  z-index: 1;
+}
+
+.big {
+  width: 100%;
+  height: 200%;
+
+  background-color: aqua;
+
+  clip-path: polygon(0% 0%, 100% 0%, 50% 50%);
+}
+
+.name_group {
+  width: 100%;
+  height: 75%;
+
+  font-size: 1.5rem;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15%;
+}
+
+.name_group p {
+  width: 90%;
+  height: 28px;
+  border: #64ffda 1px solid;
+  user-select: none;
+  background-color: #112240;
+}

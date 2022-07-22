@@ -50,4 +50,13 @@ async function exists(path) {
   }
 }
 
-export { write, read, exists };
+async function getFilesInDir(path) {
+  try {
+    const files = await fsPromises.readdir(path);
+    return files;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export { write, read, exists, getFilesInDir };

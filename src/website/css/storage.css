@@ -1,0 +1,78 @@
+.hidden {
+  display: none;
+}
+
+.storage {
+  margin-top: 20px;
+  position: fixed;
+  display: flex;
+  right: 50px;
+  gap: 30px;
+}
+.storage img {
+  width: 35px;
+  cursor: pointer;
+}
+.storage .popup {
+  position: fixed;
+  background-color: #112240;
+  top: 90px;
+  right: 30px;
+  padding: 20px;
+}
+.storage .popup input,
+.storage .popup select {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #87f3da;
+  caret-color: #ccd6dc;
+}
+.storage .popup input:focus,
+.storage .popup select:focus {
+  outline: none;
+}
+.storage .popup button {
+  padding: 5px 15px;
+}
+.storage input {
+  color: inherit;
+  font-size: inherit;
+}
+.storage .load .popup {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.storage .load .popup label {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.storage .load .popup .input {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+.storage .load .popup select {
+  margin-right: 15px;
+  flex-grow: 1;
+  box-sizing: border-box;
+  background-color: transparent;
+  padding: 0 1em 0 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  line-height: inherit;
+  color: inherit;
+}
+.storage .load .popup select::before, .storage .load .popup select::after {
+  cursor: pointer;
+  box-sizing: border-box;
+  background-color: #112240;
+  border: none;
+  outline: none;
+}
+.storage .load .popup select option {
+  background-color: #112240;
+}/*# sourceMappingURL=storage.css.map */

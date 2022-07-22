@@ -1,0 +1,244 @@
+.tree {
+  height: 70%;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+}
+.tree .level {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex: 1 1;
+}
+.tree .level .match {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1;
+  align-items: center;
+}
+.tree .level .match .bracket {
+  flex: 1 1;
+}
+.tree .level .match .players {
+  flex: 2 2;
+}
+.tree .level .match .players {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+}
+.tree .player {
+  margin: 0;
+  min-width: 20ch;
+  border: 1px solid #87f3da;
+  text-align: center;
+  height: 3ch;
+  line-height: 3ch;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
+}
+.tree .player.winner {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.bracket {
+  display: flex;
+  margin: 0;
+}
+.bracket .bar {
+  margin: 0;
+  background-color: #c6d6dc;
+  position: relative;
+}
+.bracket .bar::before {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: coral;
+}
+.bracket .bar::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: coral;
+  z-index: 100;
+  border-radius: 50%;
+  transform: scale(0);
+}
+.bracket .bar.horizontal {
+  height: 10px;
+}
+.bracket .bar.horizontal::before {
+  width: 0%;
+  height: 10px;
+}
+.bracket .bar.horizontal::after {
+  top: -8.3333333333px;
+  left: -8.3333333333px;
+}
+.bracket .bar.vertical {
+  width: 10px;
+}
+.bracket .bar.vertical::before {
+  width: 10px;
+  height: 0%;
+}
+.bracket .bar.vertical::after {
+  top: -8.3333333333px;
+  left: -8.3333333333px;
+}
+.bracket .left,
+.bracket .right {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.bracket .right .bar {
+  flex-grow: 1;
+}
+.bracket .right .vertical {
+  height: 50%;
+}
+.bracket .right .vertical.down {
+  transform: rotate(180deg);
+}
+.bracket .right .vertical::before, .bracket .right .vertical::after {
+  -webkit-animation-delay: 0.35s;
+          animation-delay: 0.35s;
+}
+.bracket .right .horizontal::before, .bracket .right .horizontal::after {
+  -webkit-animation-delay: 0.7s;
+          animation-delay: 0.7s;
+}
+
+.anim.horizontal::before {
+  -webkit-animation: progress-bar 0.4s linear forwards;
+          animation: progress-bar 0.4s linear forwards;
+}
+.anim.horizontal::after {
+  -webkit-animation: progress-ball 0.4s linear forwards;
+          animation: progress-ball 0.4s linear forwards;
+}
+.anim.vertical::before {
+  -webkit-animation: progress-bar-v 0.4s linear forwards;
+          animation: progress-bar-v 0.4s linear forwards;
+}
+.anim.vertical::after {
+  -webkit-animation: progress-ball-v 0.4s linear forwards;
+          animation: progress-ball-v 0.4s linear forwards;
+}
+
+@-webkit-keyframes progress-bar {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes progress-bar {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@-webkit-keyframes progress-bar-v {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+@keyframes progress-bar-v {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+@-webkit-keyframes progress-ball {
+  0% {
+    transform: scale(0);
+    left: -8.3333333333px;
+  }
+  5% {
+    transform: scale(1);
+    left: -8.3333333333px;
+  }
+  99% {
+    transform: scale(1);
+    left: calc(100% - 10px);
+  }
+  100% {
+    transform: scale(0);
+    left: calc(100% - 10px);
+  }
+}
+@keyframes progress-ball {
+  0% {
+    transform: scale(0);
+    left: -8.3333333333px;
+  }
+  5% {
+    transform: scale(1);
+    left: -8.3333333333px;
+  }
+  99% {
+    transform: scale(1);
+    left: calc(100% - 10px);
+  }
+  100% {
+    transform: scale(0);
+    left: calc(100% - 10px);
+  }
+}
+@-webkit-keyframes progress-ball-v {
+  0% {
+    transform: scale(0);
+    top: -8.3333333333px;
+  }
+  5% {
+    transform: scale(1);
+    top: -8.3333333333px;
+  }
+  99% {
+    transform: scale(1);
+    top: calc(100% - 10px);
+  }
+  100% {
+    transform: scale(0);
+    top: calc(100% - 10px);
+  }
+}
+@keyframes progress-ball-v {
+  0% {
+    transform: scale(0);
+    top: -8.3333333333px;
+  }
+  5% {
+    transform: scale(1);
+    top: -8.3333333333px;
+  }
+  99% {
+    transform: scale(1);
+    top: calc(100% - 10px);
+  }
+  100% {
+    transform: scale(0);
+    top: calc(100% - 10px);
+  }
+}/*# sourceMappingURL=tree.css.map */
