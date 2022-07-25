@@ -104,6 +104,12 @@ app.get("/wcm/pages", async function (req, res) {
   res.send(filesNames);
 });
 
+//WCM get pages name
+app.post("/wcm/modif", async function (req, res) {
+  const filesNames = await getPagesName();
+  res.send(filesNames);
+});
+
 //
 app.get("/about", async function (req, res) {
   res.send(await renderWebsite("about"));

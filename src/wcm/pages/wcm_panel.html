@@ -12,31 +12,40 @@
     <main>
       <!-- Menu -->
       <section id="menu">
-        <button id="page_button" class="menu_button">Modifier vos pages</button>
-        <button id="products_button" class="menu_button">
+        <button id="menu_to_pages_nav" class="menu_button nav_pages">
+          Modifier vos pages
+        </button>
+        <button id="menu_to_products_nav" class="menu_button nav_products">
           Ajouter des produits
         </button>
       </section>
+
+      <!-- Page List -->
       <section id="pages" class="hidden">
-        <button class="back_button">Retour</button>
+        <button class="nav_menu">Retour</button>
         <div id="page_names" class="button_list"></div>
       </section>
+
+      <!-- Products List -->
       <section id="products" class="hidden">
-        <button class="back_button">Retour</button>
+        <button class="nav_menu">Retour</button>
       </section>
-      <section id="modif" class="hidden">
+
+      <!-- Page Modification -->
+      <section id="update_page" class="hidden">
         <div class="controls">
-          <button>Retour</button>
-          <button>Sauvegarder</button>
+          <button class="nav_pages">Retour</button>
+          <button class="save_page_button">Sauvegarder</button>
           <button></button>
-          <!-- <iframe src="/about"></iframe> -->
         </div>
+        <iframe src="" frameborder="0"></iframe>
       </section>
     </main>
-    <template id="page_name_button_temp">
-      <button class="page_name_button"></button>
-    </template>
-  </body>
 
-  <script type="module" src="../../wcm/js/wcm_panel.js"></script>
+    <!-- Templates -->
+    <template id="page_name_button_temp">
+      <button class="nav_modif"></button>
+    </template>
+    <script type="module" src="../../wcm/js/wcm_panel.js"></script>
+  </body>
 </html>
