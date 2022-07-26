@@ -10,6 +10,28 @@ const menuNavButtons = document.querySelectorAll(".nav_menu");
 //All buttons to navigate to the modification section
 const modifNavButtons = document.querySelectorAll(".nav_modif");
 
+//list of page name buttons in pages section
+const pageNamesList = document.querySelector("#page_names");
+
+//iframe of the modif section
+const modifIframe = document.querySelector("#modif_iframe");
+
+//sections array
+let sections = {
+  menu: document.querySelector("#menu"),
+  pages: document.querySelector("#pages"),
+  products: document.querySelector("#products"),
+  modif: document.querySelector("#modif"),
+};
+
+function loadSect(sect) {
+  for (const key in sections) {
+    sections[key].classList.add("hidden");
+  }
+
+  sections[sect].classList.remove("hidden");
+}
+
 async function getPagesNames() {
   const url = "/wcm/pages";
 
@@ -42,65 +64,55 @@ function clonePageButton(name) {
   return clone;
 }
 
-function loadProductsSect() {
-  for (const sect of sections) {
-    sect.classList.add("hidden");
-  }
-  sections[2].classList.remove("hidden");
-}
-
-function loadMenuSect() {
-  for (const sect of sections) {
-    sect.classList.add("hidden");
-  }
-  sections[0].classList.remove("hidden");
-}
-
 async function loadPageSect() {
   console.log("page button event");
 
-  for (const sect of sections) {
-    sect.classList.add("hidden");
-  }
-  sections[1].classList.remove("hidden");
-
   let pageNames = await getPagesNames();
 
-  while (pageBtnList.lastElementChild) {
-    pageBtnList.removeChild(pageBtnList.lastElementChild);
+  while (pageNamesList.lastElementChild) {
+    pageNamesList.removeChild(pageNamesList.lastElementChild);
   }
 
   for (const name of pageNames) {
-    pageBtnList.appendChild(clonePageButton(name));
+    pageNamesList.appendChild(clonePageButton(name));
   }
 
-  for (const pageButton of pageBtnList.children) {
+  for (const pageButton of pageNamesList.children) {
     console.log(pageButton);
     pageButton.addEventListener("click", loadModifSect);
-    console.log("click click");
   }
+
+  loadSect("pages");
 }
 
 async function loadModifSect(e) {
   const name = e.target.textContent.split(".")[0];
-  const iframe = cloneIframe(name);
 
-  console.log(iframe.src);
+  modifIframe.setAttribute("src", name);
 
-  const backButton = document.querySelector("#modif .back");
-  const saveButton = document.querySelector("#modif .save");
+  loadSect("modif");
+  console.log(modifIframe.contentDocument.designMode);
+  // modifIframe.contentDocument.designMode = "on";
 
-  sections[3].appendChild(iframe);
-  for (const sect of sections) {
-    sect.classList.add("hidden");
-  }
-  sections[3].classList.remove("hidden");
+  setTimeout(() => {
+    let doc = modifIframe.contentDocument || modifIframe.contentWindow.document;
+    doc.designMode = "on";
+    console.log(doc.designMode, modifIframe);
+  }, 1000);
 }
 
-pageButton.addEventListener("click", loadPageSect);
+for (const nav of pagesNavButtons) {
+  nav.addEventListener("click", loadPageSect);
+}
 
-productsButton.addEventListener("click", loadProductsSect);
+for (const nav of productsNavButtons) {
+  nav.addEventListener("click", function () {
+    loadSect("products");
+  });
+}
 
-for (const button of backButtons) {
-  button.addEventListener("click", loadMenuSect);
+for (const nav of menuNavButtons) {
+  nav.addEventListener("click", function () {
+    loadSect("menu");
+  });
 }

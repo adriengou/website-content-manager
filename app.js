@@ -1,8 +1,8 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import livereload from "livereload";
-import connectLivereload from "connect-livereload";
+// import livereload from "livereload";
+// import connectLivereload from "connect-livereload";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,22 +12,22 @@ process.env.PATH = __dirname;
 const fh = await import(`${__dirname}/modules/fileHandler.js`);
 const admin = await import(`${__dirname}/modules/admin.js`);
 
-// open livereload high port and start to watch public directory for changes
-const liveReloadServer = livereload.createServer();
-liveReloadServer.watch(path.join(__dirname, "src"));
-
-// ping browser on Express boot, once browser has reconnected and handshaken
-liveReloadServer.server.once("connection", () => {
-  setTimeout(() => {
-    liveReloadServer.refresh("/");
-  }, 100);
-});
-
 const app = express();
 const port = 3000;
 
-// monkey patch every served HTML so they know of changes
-app.use(connectLivereload());
+// // open livereload high port and start to watch public directory for changes
+// const liveReloadServer = livereload.createServer();
+// liveReloadServer.watch(path.join(__dirname, "src"));
+
+// // ping browser on Express boot, once browser has reconnected and handshaken
+// liveReloadServer.server.once("connection", () => {
+//   setTimeout(() => {
+//     liveReloadServer.refresh("/");
+//   }, 100);
+// });
+
+// // monkey patch every served HTML so they know of changes
+// app.use(connectLivereload());
 
 async function renderWebsite(path) {
   const filePath = `${__dirname}/src/website/pages/${path}.html`;

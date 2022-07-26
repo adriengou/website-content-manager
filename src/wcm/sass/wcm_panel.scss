@@ -4,6 +4,9 @@ body {
   margin: 0;
   font-family: "Varela Round", sans-serif;
 }
+button {
+  font-family: "Varela Round", sans-serif;
+}
 
 #menu {
   box-sizing: border-box;
@@ -38,4 +41,37 @@ body {
 
 .hidden {
   display: none !important;
+}
+
+//modif
+#modif {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modif_controls {
+  margin-bottom: 20px;
+  z-index: 1;
+
+  display: flex;
+  gap: 5px;
+}
+
+.modif_controls button {
+  width: 20ch;
+  background-color: white;
+  border: none;
+  font-size: 1.1rem;
+  padding: 5px 0px;
+}
+
+#modif_iframe {
+  top: 0;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
 }
