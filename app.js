@@ -1,6 +1,8 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import fileUpload from "express-fileupload";
+
 // import livereload from "livereload";
 // import connectLivereload from "connect-livereload";
 
@@ -47,11 +49,19 @@ async function getPagesName() {
   return pageNames;
 }
 
+async function updatePage(pageName, content) {
+  const filePath = `${__dirname}/src/website/pages/${pageName}.html`;
+  await fh.write(filePath, content);
+}
+
 //Json middleware
 app.use(express.json());
 
 //forms middleware
 app.use(express.urlencoded({ extended: true }));
+
+//File upload middleware
+app.use(fileUpload());
 
 //Index.html GET request
 app.get("/", async function (req, res) {
@@ -104,10 +114,37 @@ app.get("/wcm/pages", async function (req, res) {
   res.send(filesNames);
 });
 
-//WCM get pages name
+//WCM POST update page
 app.post("/wcm/modif", async function (req, res) {
-  const filesNames = await getPagesName();
-  res.send(filesNames);
+  console.log("--------------Modif send POST request---------------");
+  console.log(`Request body:\n${JSON.stringify(req.body)}`);
+  await updatePage(req.body.fileName, req.body.content);
+  res.send(req.body);
+});
+
+app.post("/wcm/upload", function (req, res) {
+  console.log(req.files);
+  console.log("--------------Upload send POST request---------------");
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
+
+  console.log(req.files);
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  let sampleFile = req.files.file;
+  let fileName = req.giles.file.name;
+
+  // Use the mv() method to place the file somewhere on your server
+  sampleFile.mv(
+    `${__dirname}/src/website/assets/images/${fileName}`,
+
+    function (err) {
+      if (err) return res.status(500).send(err);
+
+      res.send(fileName);
+    }
+  );
 });
 
 //

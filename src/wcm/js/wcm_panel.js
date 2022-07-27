@@ -16,6 +16,12 @@ const pageNamesList = document.querySelector("#page_names");
 //iframe of the modif section
 const modifIframe = document.querySelector("#modif_iframe");
 
+//modif cancel button
+const modifCancelButton = document.querySelector(".modif_cancel_button");
+
+//modif save button
+const modifSaveButton = document.querySelector(".modif_save_button");
+
 //sections array
 let sections = {
   menu: document.querySelector("#menu"),
@@ -23,6 +29,9 @@ let sections = {
   products: document.querySelector("#products"),
   modif: document.querySelector("#modif"),
 };
+
+//page names array
+let pageNames = [];
 
 function loadSect(sect) {
   for (const key in sections) {
@@ -49,6 +58,71 @@ async function getPagesNames() {
   return data;
 }
 
+async function sendModifiedPage() {
+  //get innerHtml
+  let html = modifIframe.contentDocument.children[0].outerHTML;
+  console.log(html);
+
+  const url = "/wcm/modif";
+
+  const obj = {
+    fileName: modifIframe.getAttribute("src"),
+    content: html,
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(obj),
+  };
+
+  const response = await fetch(url, options);
+  let data = await response.json();
+  console.log(data);
+}
+
+async function uploadImage() {
+  //create the input element
+  let fileInput = document.createElement("input");
+  fileInput.setAttribute("type", "file");
+  fileInput.setAttribute("name", "file");
+  fileInput.click();
+
+  fileInput.addEventListener("change", async function (e) {
+    //creating form data object and append file into that form data
+    let formData = new FormData();
+    formData.append("files", fileInput.files[0]);
+
+    for (const entry of formData.entries()) {
+      console.log(entry);
+    }
+
+    console.log(formData.entries());
+
+    //network request using POST method of fetch
+    const url = "/wcm/upload";
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Length": fileInput.files[0].length,
+        "Content-Type": "multipart/form-data",
+      },
+      body: formData,
+    };
+
+    const response = await fetch(url, options);
+    let data = await response.text();
+    console.log(data);
+  });
+}
+
+document.addEventListener("click", async function (e) {
+  await uploadImage();
+});
+
 function clonePageButton(name) {
   const template = document
     .querySelector("#page_name_button_temp")
@@ -67,14 +141,15 @@ function clonePageButton(name) {
 async function loadPageSect() {
   console.log("page button event");
 
-  let pageNames = await getPagesNames();
+  pageNames = await getPagesNames();
 
   while (pageNamesList.lastElementChild) {
     pageNamesList.removeChild(pageNamesList.lastElementChild);
   }
 
   for (const name of pageNames) {
-    pageNamesList.appendChild(clonePageButton(name));
+    let newName = name.split(".")[0];
+    pageNamesList.appendChild(clonePageButton(newName));
   }
 
   for (const pageButton of pageNamesList.children) {
@@ -96,8 +171,19 @@ async function loadModifSect(e) {
 
   setTimeout(() => {
     let doc = modifIframe.contentDocument || modifIframe.contentWindow.document;
-    doc.designMode = "on";
-    console.log(doc.designMode, modifIframe);
+
+    //get all modifiable element
+    let allElements = doc.querySelectorAll("body *");
+    console.log(allElements);
+    for (const elem of allElements) {
+      if (!elem.children.length) {
+        elem.contentEditable = "true";
+        console.log(elem);
+      }
+    }
+
+    // doc.designMode = "on";
+    // console.log(doc.designMode, modifIframe);
   }, 1000);
 }
 
@@ -116,3 +202,27 @@ for (const nav of menuNavButtons) {
     loadSect("menu");
   });
 }
+
+modifSaveButton.addEventListener("click", async function () {
+  //get all modifiable element
+  let doc = modifIframe.contentDocument || modifIframe.contentWindow.document;
+
+  let allElements = doc.querySelectorAll("body *");
+  console.log(allElements);
+
+  for (const elem of allElements) {
+    if (!elem.children.length) {
+      elem.contentEditable = "inherit";
+      console.log(elem);
+    }
+  }
+
+  await sendModifiedPage();
+
+  for (const elem of allElements) {
+    if (!elem.children.length) {
+      elem.contentEditable = "true";
+      console.log(elem);
+    }
+  }
+});
