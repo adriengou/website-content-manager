@@ -59,4 +59,12 @@ async function getFilesInDir(path) {
   }
 }
 
-export { write, read, exists, getFilesInDir };
+async function mkdir(path) {
+  try {
+    await fs.promises.mkdir(pathModule.dirname(path), { recursive: true });
+  } catch (err) {
+    console.error("Error occured while creating directory!", err);
+  }
+}
+
+export { write, read, exists, getFilesInDir, mkdir };

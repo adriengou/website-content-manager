@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import fileUpload from "express-fileupload";
+import multer from "multer";
 
 // import livereload from "livereload";
 // import connectLivereload from "connect-livereload";
@@ -60,8 +60,9 @@ app.use(express.json());
 //forms middleware
 app.use(express.urlencoded({ extended: true }));
 
-//File upload middleware
-app.use(fileUpload());
+//multer middleware sort of
+const imgPath = `${__dirname}/src/website/assets/images`;
+const imgUpload = multer({ dest: imgPath });
 
 //Index.html GET request
 app.get("/", async function (req, res) {
@@ -122,29 +123,10 @@ app.post("/wcm/modif", async function (req, res) {
   res.send(req.body);
 });
 
-app.post("/wcm/upload", function (req, res) {
+app.post("/wcm/upload", imgUpload.single("file"), async function (req, res) {
+  console.log(req.body);
   console.log(req.files);
-  console.log("--------------Upload send POST request---------------");
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No files were uploaded.");
-  }
-
-  console.log(req.files);
-
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.file;
-  let fileName = req.giles.file.name;
-
-  // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv(
-    `${__dirname}/src/website/assets/images/${fileName}`,
-
-    function (err) {
-      if (err) return res.status(500).send(err);
-
-      res.send(fileName);
-    }
-  );
+  res.json({ message: "Successfully uploaded files" });
 });
 
 //
