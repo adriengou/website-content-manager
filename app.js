@@ -61,8 +61,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //multer middleware sort of
-const imgPath = `${__dirname}/src/website/assets/images`;
-const imgUpload = multer({ dest: imgPath });
+const imgPath = `${__dirname}/src/website/assets`;
+
+const imgStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, imgPath);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const imgUpload = multer({ storage: imgStorage });
 
 //Index.html GET request
 app.get("/", async function (req, res) {
@@ -123,9 +133,9 @@ app.post("/wcm/modif", async function (req, res) {
   res.send(req.body);
 });
 
-app.post("/wcm/upload", imgUpload.single("file"), async function (req, res) {
+app.post("/wcm/upload", imgUpload.single("files"), async function (req, res) {
   console.log(req.body);
-  console.log(req.files);
+  console.log(req.file);
   res.json({ message: "Successfully uploaded files" });
 });
 

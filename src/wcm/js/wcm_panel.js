@@ -41,6 +41,14 @@ function loadSect(sect) {
   sections[sect].classList.remove("hidden");
 }
 
+function changePathFileName(path, name) {
+  let newPath = path.split("/");
+  newPath[newPath.length - 1] = name;
+  newPath = newPath.join("/");
+  console.log(path, newPath);
+  return newPath;
+}
+
 async function getPagesNames() {
   const url = "/wcm/pages";
 
@@ -83,7 +91,7 @@ async function sendModifiedPage() {
   console.log(data);
 }
 
-async function uploadImage() {
+async function uploadImage(element) {
   //create the input element
   let fileInput = document.createElement("input");
   fileInput.setAttribute("type", "file");
@@ -92,8 +100,10 @@ async function uploadImage() {
 
   fileInput.addEventListener("change", async function (e) {
     //creating form data object and append file into that form data
+    console.log(fileInput.files[0]);
     let formData = new FormData();
     formData.append("files", fileInput.files[0]);
+    formData.append("oldFile", element.src);
 
     for (const entry of formData.entries()) {
       console.log(entry);
@@ -106,22 +116,24 @@ async function uploadImage() {
 
     const options = {
       method: "POST",
-      headers: {
-        "Content-Length": fileInput.files[0].length,
-        "Content-Type": "multipart/form-data",
-      },
+      // headers: {
+      //   "Content-Length": fileInput.files[0].length,
+      //   "Content-Type": "multipart/form-data",
+      // },
       body: formData,
     };
 
     const response = await fetch(url, options);
     let data = await response.text();
     console.log(data);
+
+    element.src = changePathFileName(element.src, fileInput.files[0].name);
   });
 }
 
-document.addEventListener("click", async function (e) {
-  await uploadImage();
-});
+// document.addEventListener("click", async function (e) {
+//   await uploadImage();
+// });
 
 function clonePageButton(name) {
   const template = document
@@ -176,11 +188,19 @@ async function loadModifSect(e) {
     let allElements = doc.querySelectorAll("body *");
     console.log(allElements);
     for (const elem of allElements) {
-      if (!elem.children.length) {
+      if (!elem.children.length && elem.tagName !== "IMG") {
         elem.contentEditable = "true";
         console.log(elem);
       }
     }
+
+    //run uploadImage each time we click an image
+    doc.addEventListener("click", async function (e) {
+      console.log(e.target.tagName);
+      if (e.target.tagName !== "IMG") return false;
+
+      await uploadImage(e.target);
+    });
 
     // doc.designMode = "on";
     // console.log(doc.designMode, modifIframe);
