@@ -1,58 +1,11 @@
 import express from "express";
 import path from "path";
-import { fileURLToPath } from "url";
 import multer from "multer";
-
-// import livereload from "livereload";
-// import connectLivereload from "connect-livereload";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-console.log(__dirname);
-process.env.PATH = __dirname;
-
-const fh = await import(`${__dirname}/modules/fileHandler.js`);
-const admin = await import(`${__dirname}/modules/admin.js`);
+import config from "./config/config.js";
+import wcm from "./modules/wcm.js";
 
 const app = express();
 const port = 3000;
-
-// // open livereload high port and start to watch public directory for changes
-// const liveReloadServer = livereload.createServer();
-// liveReloadServer.watch(path.join(__dirname, "src"));
-
-// // ping browser on Express boot, once browser has reconnected and handshaken
-// liveReloadServer.server.once("connection", () => {
-//   setTimeout(() => {
-//     liveReloadServer.refresh("/");
-//   }, 100);
-// });
-
-// // monkey patch every served HTML so they know of changes
-// app.use(connectLivereload());
-
-async function renderWebsite(path) {
-  const filePath = `${__dirname}/src/website/pages/${path}.html`;
-  let page = await fh.read(filePath);
-  return page;
-}
-
-async function renderWcm(path) {
-  const filePath = `${__dirname}/src/wcm/pages/${path}.html`;
-  let page = await fh.read(filePath);
-  return page;
-}
-
-async function getPagesName() {
-  const dirPath = `${__dirname}/src/website/pages`;
-  let pageNames = JSON.stringify(await fh.getFilesInDir(dirPath));
-  return pageNames;
-}
-
-async function updatePage(pageName, content) {
-  const filePath = `${__dirname}/src/website/pages/${pageName}.html`;
-  await fh.write(filePath, content);
-}
 
 //Json middleware
 app.use(express.json());
@@ -61,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //multer middleware sort of
-const imgPath = `${__dirname}/src/website/assets`;
+const imgPath = config.WEBSITE_ASSETS_PATH;
 
 const imgStorage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -74,54 +27,9 @@ const imgStorage = multer.diskStorage({
 
 const imgUpload = multer({ storage: imgStorage });
 
-//Index.html GET request
-app.get("/", async function (req, res) {
-  res.send(await renderWebsite("index"));
-});
-
-app.get("/about", async function (req, res) {
-  res.send(await renderWebsite("about"));
-});
-
-app.get("/wcm", async function (req, res) {
-  // res.send(await renderWcm("wcm_auth"));
-  res.send(await renderWcm("wcm_panel")); //CHANGE BACK TO "wcm_auth" WHEN DONE
-});
-
-//Admin register POST request
-app.post("/wcm", async function (req, res) {
-  console.log("--------------Admin register POST request---------------");
-  console.log(`Request body:\n${JSON.stringify(req.body)}`);
-
-  let password = req.body.password;
-
-  let result;
-
-  if (req.body.isLogin) {
-    result = await admin.login(password);
-    console.log("Login request");
-  } else {
-    result = await admin.register(password);
-    console.log("Register request");
-  }
-
-  console.log("RESULT: " + result);
-
-  if (req.body.js) {
-    console.log("fetch request");
-    res.send({
-      body: req.body,
-      result: result,
-    });
-  } else if (result) {
-    console.log("form request");
-    res.send(await renderWcm("wcm_panel"));
-  }
-});
-
 //WCM get pages name
 app.get("/wcm/pages", async function (req, res) {
-  const filesNames = await getPagesName();
+  const filesNames = await wcm.getPagesName();
   res.send(filesNames);
 });
 
@@ -129,7 +37,7 @@ app.get("/wcm/pages", async function (req, res) {
 app.post("/wcm/modif", async function (req, res) {
   console.log("--------------Modif send POST request---------------");
   console.log(`Request body:\n${JSON.stringify(req.body)}`);
-  await updatePage(req.body.fileName, req.body.content);
+  await wcm.updatePage(req.body.fileName, req.body.content);
   res.send(req.body);
 });
 
@@ -139,30 +47,32 @@ app.post("/wcm/upload", imgUpload.single("files"), async function (req, res) {
   res.json({ message: "Successfully uploaded files" });
 });
 
-//
-app.get("/about", async function (req, res) {
-  res.send(await renderWebsite("about"));
+//This serves Website static pages
+app.use(
+  "/",
+  express.static(config.WEBSITE_PAGES_PATH, { extensions: ["html"] })
+);
+
+//This serves Website static js
+app.use("/website/js/", express.static(config.WEBSITE_JS_PATH));
+
+//This serves Website static css
+app.use("/website/css", express.static(config.WEBSITE_CSS_PATH));
+
+//This serves Website static assets
+app.use("/website/assets", express.static(config.WEBSITE_ASSETS_PATH));
+
+//This serves WCM panel static pages
+app.get("/wcm", function (req, res) {
+  res.sendFile(path.join(config.WCM_PAGES_PATH, "wcm_panel.html"));
 });
 
-app.get("/contact", async function (req, res) {
-  res.send(await renderWebsite("contact"));
-});
+//This serves WCM static js
+app.use("/wcm/js", express.static(config.WCM_JS_PATH));
 
-//This serves Website static js
-app.use("/website/js/", express.static(`${__dirname}/src/website/js`));
-
-//This serves Website static js
-app.use("/website/css", express.static(`${__dirname}/src/website/css`));
-
-//This serves Website static js
-app.use("/wcm/js", express.static(`${__dirname}/src/wcm/js`));
-
-//This serves Website static js
-app.use("/wcm/css", express.static(`${__dirname}/src/wcm/css`));
-
-//This serves Website static js
-app.use("/website/assets", express.static(`${__dirname}/src/website/assets`));
+//This serves WCM static css
+app.use("/wcm/css", express.static(config.WCM_CSS_PATH));
 
 app.listen(port, function () {
-  console.log(`Example app listening on port ${port}!`);
+  console.log(`Example app listening on port ${config.PORT}!`);
 });

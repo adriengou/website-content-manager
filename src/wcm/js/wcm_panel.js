@@ -173,7 +173,8 @@ async function loadPageSect() {
 }
 
 async function loadModifSect(e) {
-  const name = e.target.textContent.split(".")[0];
+  const name = `/${e.target.textContent.split(".")[0]}`;
+  console.log(name);
 
   modifIframe.setAttribute("src", name);
 
