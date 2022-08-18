@@ -10,8 +10,41 @@
   </head>
   <body>
     <main>
+      <!-- Login -->
+      <section id="login" class="">
+        <h1 class="title">WCM</h1>
+        <p class="error hidden" id="error">Wrong password</p>
+        <form name="auth-form" action="/wcm" method="post" id="auth_form">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Mot de passe"
+            class="input"
+          />
+
+          <div class="buttons">
+            <input
+              name="submit"
+              type="submit"
+              value="Enregistrer"
+              id="register"
+              class="button"
+            />
+            <input
+              name="submit"
+              type="submit"
+              value="Se connecter"
+              id="login"
+              class="button"
+            />
+          </div>
+          <input type="hidden" name="isLogin" id="isLogin" value="true" />
+        </form>
+      </section>
+
       <!-- Menu -->
-      <section id="menu">
+      <section id="menu" class="hidden">
         <button id="menu_to_pages_nav" class="menu_button nav_pages">
           Modifier vos pages
         </button>

@@ -1,7 +1,8 @@
-import config from "../config/config.js";
+// import config from "../config/config.js";
 import path from "path";
+import fh from "../modules/file_handler.js";
 
-const fh = await import(path.join(config.ROOT_PATH, "modules/fileHandler.js"));
+const config = process.env;
 
 async function getPagesName() {
   const dirPath = config.WEBSITE_PAGES_PATH;

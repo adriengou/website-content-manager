@@ -67,4 +67,4 @@ async function mkdir(path) {
   }
 }
 
-export { write, read, exists, getFilesInDir, mkdir };
+export default { write, read, exists, getFilesInDir, mkdir };

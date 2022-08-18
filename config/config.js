@@ -24,9 +24,12 @@ const WCM_CSS_PATH = path.join(WCM_PATH, "css");
 const WCM_JS_PATH = path.join(WCM_PATH, "js");
 const WCM_ASSETS_PATH = path.join(WCM_PATH, "assets");
 
+//Path to WCM password
+const WCM_PASSWORD_PATH = path.join(ROOT_PATH, "password.txt");
+
 console.log(ROOT_PATH, PORT);
 
-export default {
+const config = {
   ROOT_PATH,
   PORT,
 
@@ -42,3 +45,7 @@ export default {
   WCM_JS_PATH,
   WCM_ASSETS_PATH,
 };
+
+for (const opt in config) {
+  process.env[opt] = config[opt];
+}
