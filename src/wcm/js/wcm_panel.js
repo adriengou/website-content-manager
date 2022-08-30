@@ -1,15 +1,3 @@
-//All buttons to navigate to the pages list section
-const pagesNavButtons = document.querySelectorAll(".nav_pages");
-
-//All buttons to navigate to the products list section
-const productsNavButtons = document.querySelectorAll(".nav_products");
-
-//All buttons to navigate to the menu section
-const menuNavButtons = document.querySelectorAll(".nav_menu");
-
-//All buttons to navigate to the modification section
-const modifNavButtons = document.querySelectorAll(".nav_modif");
-
 //list of page name buttons in pages section
 const pageNamesList = document.querySelector("#page_names");
 
@@ -28,7 +16,29 @@ let sections = {
   pages: document.querySelector("#pages"),
   products: document.querySelector("#products"),
   modif: document.querySelector("#modif"),
+  login: document.querySelector("#login"),
 };
+
+let navButtons = {
+  menu: document.querySelectorAll(".nav_menu"),
+  pages: document.querySelectorAll(".nav_pages"),
+  products: document.querySelectorAll(".nav_products"),
+  modif: document.querySelectorAll(".nav_modif"),
+  login: document.querySelectorAll(".nav_login"),
+};
+
+for (const key of navButtons) {
+  let callback = false;
+  if (key === "pages") {
+    navButtons[key].addEventListener("click", function () {
+      loadPageSect();
+    });
+  } else {
+    navButtons[key].addEventListener("click", function () {
+      loadSect(key);
+    });
+  }
+}
 
 //page names array
 let pageNames = [];
