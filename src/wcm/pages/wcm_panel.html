@@ -11,7 +11,7 @@
   <body>
     <main>
       <!-- Login -->
-      <section id="login" class="hidden">
+      <section id="login" class="hidden" view="/login">
         <h1 class="title">WCM</h1>
         <p class="error hidden" id="error">Wrong password</p>
         <form name="auth-form" action="/wcm" method="post" id="auth_form">
@@ -44,30 +44,38 @@
       </section>
 
       <!-- Menu -->
-      <section id="menu" class="">
-        <button id="menu_to_pages_nav" class="menu_button nav_pages">
+      <section id="menu" class="hidden" view="/menu">
+        <button
+          id="menu_to_pages_nav"
+          class="menu_button nav_pages"
+          route="/pages"
+        >
           Modifier vos pages
         </button>
-        <button id="menu_to_products_nav" class="menu_button nav_products">
+        <button
+          id="menu_to_products_nav"
+          class="menu_button nav_products"
+          route="/products"
+        >
           Ajouter des produits
         </button>
       </section>
 
       <!-- Page List -->
-      <section id="pages" class="hidden">
-        <button class="nav_menu">Retour</button>
+      <section id="pages" class="hidden" view="/pages">
+        <button class="nav_menu" route="/menu">Retour</button>
         <div id="page_names" class="button_list"></div>
       </section>
 
       <!-- Products List -->
-      <section id="products" class="hidden">
-        <button class="nav_menu">Retour</button>
+      <section id="products" class="hidden" view="/products">
+        <button class="nav_menu" route="/menu">Retour</button>
       </section>
 
       <!-- Page Modification -->
-      <section id="modif" class="hidden">
+      <section id="modif" class="hidden" view="/modif">
         <div class="modif_controls">
-          <button class="nav_pages">Retour</button>
+          <button class="nav_pages" route="/pages">Retour</button>
           <button class="modif_save_button">Sauvegarder</button>
           <button class="modif_cancel_button">Annuler</button>
         </div>
@@ -77,8 +85,8 @@
 
     <!-- Templates -->
     <template id="page_name_button_temp">
-      <button class="nav_modif"></button>
+      <button class="nav_modif" route="/modif"></button>
     </template>
-    <script type="module" src="../../wcm/js/wcm_panel.js"></script>
+    <script type="module" src="../../wcm/js/main.js"></script>
   </body>
 </html>

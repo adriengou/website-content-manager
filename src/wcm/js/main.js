@@ -10,46 +10,49 @@ const modifCancelButton = document.querySelector(".modif_cancel_button");
 //modif save button
 const modifSaveButton = document.querySelector(".modif_save_button");
 
-//sections array
-let sections = {
-  menu: document.querySelector("#menu"),
-  pages: document.querySelector("#pages"),
-  products: document.querySelector("#products"),
-  modif: document.querySelector("#modif"),
-  login: document.querySelector("#login"),
-};
+document.addEventListener("click", async function (e) {
+  let route = e.target.getAttribute("route");
+  if (route) {
+    await router(route);
+  }
+});
 
-let navButtons = {
-  menu: document.querySelectorAll(".nav_menu"),
-  pages: document.querySelectorAll(".nav_pages"),
-  products: document.querySelectorAll(".nav_products"),
-  modif: document.querySelectorAll(".nav_modif"),
-  login: document.querySelectorAll(".nav_login"),
-};
+async function router(route) {
+  let views = document.querySelectorAll("[view]");
+  console.log(views);
+  let nextView;
 
-for (const key of navButtons) {
-  let callback = false;
-  if (key === "pages") {
-    navButtons[key].addEventListener("click", function () {
+  switch (route) {
+    case "/pages":
+      nextView = route;
       loadPageSect();
-    });
-  } else {
-    navButtons[key].addEventListener("click", function () {
-      loadSect(key);
-    });
+      break;
+
+    case "/modif":
+      nextView = route;
+      break;
+
+    default:
+      nextView = route;
+      break;
+  }
+
+  //hide all views to show the next one
+  for (const view of views) {
+    console.log({ route }, view.getAttribute("view"), { nextView });
+    if (view.getAttribute("view") === nextView) {
+      view.classList.remove("hidden");
+    } else {
+      view.classList.add("hidden");
+    }
+    console.log({ view });
   }
 }
+
+router("/menu");
 
 //page names array
 let pageNames = [];
-
-function loadSect(sect) {
-  for (const key in sections) {
-    sections[key].classList.add("hidden");
-  }
-
-  sections[sect].classList.remove("hidden");
-}
 
 function changePathFileName(path, name) {
   let newPath = path.split("/");
@@ -178,17 +181,26 @@ async function loadPageSect() {
     console.log(pageButton);
     pageButton.addEventListener("click", loadModifSect);
   }
-
-  loadSect("pages");
 }
+
+function getElementWithoutChild(elems) {
+  let foundElems = [];
+  for (const elem of elems) {
+    if (!elem.children.length && elem.tagName !== "IMG") {
+      foundElem.push(elem);
+    }
+  }
+
+  return foundElems;
+}
+
+let editableElements = [];
 
 async function loadModifSect(e) {
   const name = `/${e.target.textContent.split(".")[0]}`;
   console.log(name);
 
   modifIframe.setAttribute("src", name);
-
-  loadSect("modif");
   console.log(modifIframe.contentDocument.designMode);
   // modifIframe.contentDocument.designMode = "on";
 
@@ -200,6 +212,7 @@ async function loadModifSect(e) {
     console.log(allElements);
     for (const elem of allElements) {
       if (!elem.children.length && elem.tagName !== "IMG") {
+        editableElements.push(elem);
         elem.contentEditable = "true";
         console.log(elem);
       }
@@ -218,22 +231,6 @@ async function loadModifSect(e) {
   }, 1000);
 }
 
-for (const nav of pagesNavButtons) {
-  nav.addEventListener("click", loadPageSect);
-}
-
-for (const nav of productsNavButtons) {
-  nav.addEventListener("click", function () {
-    loadSect("products");
-  });
-}
-
-for (const nav of menuNavButtons) {
-  nav.addEventListener("click", function () {
-    loadSect("menu");
-  });
-}
-
 modifSaveButton.addEventListener("click", async function () {
   //get all modifiable element
   let doc = modifIframe.contentDocument || modifIframe.contentWindow.document;
@@ -244,7 +241,7 @@ modifSaveButton.addEventListener("click", async function () {
   for (const elem of allElements) {
     if (!elem.children.length) {
       elem.contentEditable = "inherit";
-      console.log(elem);
+      console.log(`${elem} --> ${elem.innerHTML}`);
     }
   }
 
