@@ -9,7 +9,7 @@ import fh from "../modules/file_handler.js";
 const config = process.env;
 const router = Router();
 
-//login page
+//GET WCM
 router.get("/", function (req, res) {
   console.log("test");
   res.sendFile(path.join(config.WCM_PAGES_PATH, "wcm_panel.html"));
@@ -35,14 +35,22 @@ router.post("/upload", imgUpload.single("files"), async function (req, res) {
   res.json({ message: "Successfully uploaded files" });
 });
 
-router.post("/register", function (req, res) {
-  console.log(req.body);
-  res.send("all good");
+router.post("/register", async function (req, res) {
+  let body = req.body;
+  let password = body.password;
+  console.log({ password });
+
+  const result = await wcm.createPassword(password);
+  console.log({ result });
+  res.send(result);
 });
 
 router.post("/login", function (req, res) {
-  if (condition) {
-  }
+  let body = req.body;
+  let password = body.password;
+  console.log({ password });
+
+  res.send(checkPassword(password));
 });
 
 //This serves WCM static js

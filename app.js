@@ -4,7 +4,6 @@ const config = process.env;
 import express from "express";
 import wcmRouter from "./routes/wcm_routes.js";
 import websiteRouter from "./routes/website_routes.js";
-import bodyParser from "body-parser";
 
 const app = express();
 
