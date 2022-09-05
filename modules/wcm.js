@@ -27,12 +27,13 @@ async function updatePage(fileName, content) {
 
 async function createPassword(password) {
   const path = config.WCM_PASSWORD_PATH;
+  console.log(`creating password file at path: ${path}`);
   if (await fh.exists(path)) {
     return false;
   }
 
   let hashedPassword = hashPassword(password);
-  await fh.write(path, hashPassword);
+  await fh.write(path, hashedPassword);
 
   console.log(hashedPassword);
   return hashedPassword;
@@ -46,8 +47,20 @@ async function checkPassword(password) {
   }
 
   const savedPassword = await fh.read(path);
-
-  return savedPassword === password;
+  const hashedPassword = hashPassword(password);
+  return savedPassword === hashedPassword;
 }
 
-export default { getPagesName, updatePage, createPassword };
+async function createProduct() {
+  let productTemplate = {
+    nom: "",
+    photo: "",
+    description: "",
+    prix: "",
+    entretien: "",
+    personalisation: "",
+    couleur: "",
+  };
+}
+
+export default { getPagesName, updatePage, createPassword, checkPassword };

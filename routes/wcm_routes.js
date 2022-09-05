@@ -17,12 +17,22 @@ router.get("/", function (req, res) {
 
 //WCM get pages name
 router.get("/pages", async function (req, res) {
+  if (!(await wcm.checkPassword(req.body.password))) {
+    res.send(false);
+    return false;
+  }
+
   const filesNames = await wcm.getPagesName();
   res.send(filesNames);
 });
 
 //WCM POST update page
 router.post("/modif", async function (req, res) {
+  if (!(await wcm.checkPassword(req.body.password))) {
+    res.send(false);
+    return false;
+  }
+
   console.log("--------------Modif send POST request---------------");
   console.log(`Request body:\n${JSON.stringify(req.body)}`);
   await wcm.updatePage(req.body.fileName, req.body.content);
@@ -30,9 +40,13 @@ router.post("/modif", async function (req, res) {
 });
 
 router.post("/upload", imgUpload.single("files"), async function (req, res) {
-  console.log(req.body);
+  if (!(await wcm.checkPassword(req.body.password))) {
+    res.send(false);
+    return false;
+  }
+
   console.log(req.file);
-  res.json({ message: "Successfully uploaded files" });
+  res.send(true);
 });
 
 router.post("/register", async function (req, res) {
@@ -45,12 +59,13 @@ router.post("/register", async function (req, res) {
   res.send(result);
 });
 
-router.post("/login", function (req, res) {
+router.post("/login", async function (req, res) {
   let body = req.body;
   let password = body.password;
-  console.log({ password });
 
-  res.send(checkPassword(password));
+  const result = await wcm.checkPassword(password);
+  console.log({ result });
+  res.send(result);
 });
 
 //This serves WCM static js

@@ -44,6 +44,7 @@ const config = {
   WCM_CSS_PATH,
   WCM_JS_PATH,
   WCM_ASSETS_PATH,
+  WCM_PASSWORD_PATH,
 };
 
 for (const opt in config) {
