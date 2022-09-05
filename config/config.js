@@ -27,6 +27,8 @@ const WCM_ASSETS_PATH = path.join(WCM_PATH, "assets");
 //Path to WCM password
 const WCM_PASSWORD_PATH = path.join(ROOT_PATH, "password.txt");
 
+const WCM_PRODUCTS_PATH = path.join(ROOT_PATH, "products");
+
 console.log(ROOT_PATH, PORT);
 
 const config = {
@@ -45,6 +47,7 @@ const config = {
   WCM_JS_PATH,
   WCM_ASSETS_PATH,
   WCM_PASSWORD_PATH,
+  WCM_PRODUCTS_PATH,
 };
 
 for (const opt in config) {

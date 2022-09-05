@@ -12,7 +12,7 @@ app.use(express.json());
 
 //forms middleware
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.text());
 app.use("/", websiteRouter);
 app.use("/wcm", wcmRouter);
 
