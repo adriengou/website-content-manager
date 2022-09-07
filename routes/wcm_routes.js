@@ -40,12 +40,18 @@ router.post("/login", async function (req, res) {
   res.send({ valid, hash });
 });
 
-router.use(auth);
-
 router.get("/", function (req, res) {
-  console.log("test");
-  res.sendFile(path.join(config.WCM_PAGES_PATH, "wcm_panel.html"));
+  // console.log("test");
+  res.sendFile(path.join(config.WCM_PAGES_PATH, "wcm.html"));
 });
+
+//This serves WCM static js
+router.use("/js", express.static(config.WCM_JS_PATH));
+
+//This serves WCM static css
+router.use("/css", express.static(config.WCM_CSS_PATH));
+
+router.use(auth);
 
 //WCM get pages name
 router.get("/pages", async function (req, res) {
@@ -95,11 +101,5 @@ router.delete("/products", async function (req, res) {
   const query = req.body.query;
   const result = await wcm.deleteProducts(query);
 });
-
-//This serves WCM static js
-router.use("/js", express.static(config.WCM_JS_PATH));
-
-//This serves WCM static css
-router.use("/css", express.static(config.WCM_CSS_PATH));
 
 export default router;
