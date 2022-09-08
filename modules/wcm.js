@@ -29,7 +29,7 @@ async function getPagesName() {
 
 async function updatePage(fileName, content) {
   const filePath = path.join(config.WEBSITE_PAGES_PATH, `${fileName}.html`);
-  await fh.write(filePath, content);
+  return await fh.write(filePath, content);
 }
 
 async function createPassword(password) {

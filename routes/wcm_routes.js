@@ -13,13 +13,13 @@ const router = Router();
 async function auth(req, res, next) {
   const password = req.headers.password || "none";
   console.log({ password });
-  console.log("checking auth");
-  if (!(await wcm.checkPassword(password, false))) {
+  const result = await wcm.checkPassword(password, false);
+  if (!result.valid) {
     res.send(false);
     return false;
+  } else {
+    next();
   }
-
-  next();
 }
 
 router.post("/register", async function (req, res) {
@@ -28,7 +28,7 @@ router.post("/register", async function (req, res) {
 
   const result = await wcm.createPassword(password);
   console.log({ result });
-  res.send(result);
+  res.send(JSON.stringify(result));
 });
 
 router.post("/login", async function (req, res) {
@@ -65,11 +65,15 @@ router.put("/pages", async function (req, res) {
   const content = req.body;
   console.log({ fileName, content }, req.body);
   const result = await wcm.updatePage(fileName, content);
+  console.log({ result });
   res.send(result);
 });
 
 router.post("/upload", imgUpload.single("files"), async function (req, res) {
   console.log(req.file);
+  const file = req.file;
+  const oldFilePath = req.body.oldFilePath;
+  console.log({ file, oldFilePath });
   res.send(true);
 });
 

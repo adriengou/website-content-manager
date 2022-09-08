@@ -23,6 +23,8 @@ async function write(path, content) {
   } catch (err) {
     console.error("Error occured while writing file!", err);
   }
+
+  return true;
 }
 
 async function read(path) {

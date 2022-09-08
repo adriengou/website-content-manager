@@ -8,9 +8,7 @@ session.addData = function (data) {
 
 session.getData = function (key) {
   let sessionString = sessionStorage.getItem(key);
-
-  let data = {};
-  data[key] = JSON.parse(sessionString);
+  let data = JSON.parse(sessionString);
   return data;
 };
 
