@@ -86,9 +86,10 @@ router.post("/products", async function (req, res) {
 });
 
 //READ products
-router.get("/products", async function (req, res) {
-  let query = req.body.query;
-  let products = await wcm.findProducts(query);
+router.post("/products/search", async function (req, res) {
+  const query = req.body.query;
+  console.log({ query });
+  const products = await wcm.findProducts(query);
   res.send(products);
 });
 

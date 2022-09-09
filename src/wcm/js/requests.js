@@ -118,7 +118,10 @@ requests.sendImage = async function (file, oldFilePath) {
 requests.getProducts = async function (query) {
   //get password in session
   const PASSWORD = session.getData("password");
-  const URL = "/upload";
+  const URL = "/products/search";
+  const BODY = {
+    query: query,
+  };
 
   const OPTIONS = {
     method: "POST",
@@ -126,15 +129,39 @@ requests.getProducts = async function (query) {
       "Content-Type": "application/json",
       password: PASSWORD,
     },
-
-    body: formData,
+    body: JSON.stringify(BODY),
   };
 
+  console.log(URL);
   let data = await sendRequest(URL, OPTIONS);
   return await data.json();
 };
 
-// console.log(await requests.sendImage("testFile.html", fakeF));
+requests.updateProducts = async function (query, newData) {
+  //get password in session
+  const PASSWORD = session.getData("password");
+  const URL = "/products";
+  const BODY = {
+    query: query,
+    newData: newData,
+  };
+
+  const OPTIONS = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      password: PASSWORD,
+    },
+    body: JSON.stringify(BODY),
+  };
+
+  console.log(URL);
+  let data = await sendRequest(URL, OPTIONS);
+  return await data.json();
+};
+
+await requests.login("test");
+console.log(await requests.updateProducts("ALL"));
 
 export default requests;
 
