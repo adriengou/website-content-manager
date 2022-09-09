@@ -12,7 +12,6 @@ const router = Router();
 
 async function auth(req, res, next) {
   const password = req.headers.password || "none";
-  console.log({ password });
   const result = await wcm.checkPassword(password, false);
   if (!result.valid) {
     res.send(false);
@@ -33,10 +32,8 @@ router.post("/register", async function (req, res) {
 
 router.post("/login", async function (req, res) {
   const password = req.body.password;
-  console.log({ password });
 
   const { valid, hash } = await wcm.checkPassword(password);
-  console.log({ valid, hash });
   res.send({ valid, hash });
 });
 
@@ -88,7 +85,6 @@ router.post("/products", async function (req, res) {
 //READ products
 router.post("/products/search", async function (req, res) {
   const query = req.body.query;
-  console.log({ query });
   const products = await wcm.findProducts(query);
   res.send(products);
 });
@@ -105,6 +101,8 @@ router.put("/products", async function (req, res) {
 router.delete("/products", async function (req, res) {
   const query = req.body.query;
   const result = await wcm.deleteProducts(query);
+  console.log(result);
+  res.send(result);
 });
 
 export default router;
