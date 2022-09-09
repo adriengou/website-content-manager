@@ -160,8 +160,30 @@ requests.updateProducts = async function (query, newData) {
   return await data.json();
 };
 
+requests.createProducts = async function (query) {
+  //get password in session
+  const PASSWORD = session.getData("password");
+  const URL = "/products";
+  const BODY = {
+    product: query,
+  };
+
+  const OPTIONS = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      password: PASSWORD,
+    },
+    body: JSON.stringify(BODY),
+  };
+
+  console.log(URL);
+  let data = await sendRequest(URL, OPTIONS);
+  return await data.json();
+};
+
 await requests.login("test");
-console.log(await requests.updateProducts("ALL"));
+console.log(await requests.createProducts({ prix: 42 }));
 
 export default requests;
 

@@ -3,10 +3,32 @@
     "nom": "sac",
     "photo": "link to photo",
     "description": "c'est un sac",
-    "prix": 2,
+    "prix": 42,
     "entretien": "le laver",
     "personalisation": "prenom",
     "couleur": "rouge",
     "id": "7RgUD03rZwuAHusFKKLpV"
+  },
+  {
+    "nom": "",
+    "photo": "",
+    "description": "",
+    "prix": 42,
+    "entretien": "",
+    "personalisation": "",
+    "couleur": "",
+    "collection": "",
+    "id": "FCz8yCJDZ8X3P/z14L+rF"
+  },
+  {
+    "nom": "",
+    "photo": "",
+    "description": "",
+    "prix": 42,
+    "entretien": "",
+    "personalisation": "",
+    "couleur": "",
+    "collection": "",
+    "id": "H0GAHGhNoeBsu9TZaFH45"
   }
 ]

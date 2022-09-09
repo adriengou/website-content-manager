@@ -87,7 +87,7 @@ function matchProduct(query, product, ignore = false) {
   //   }
   // }
 
-  for (const key of query) {
+  for (const key in query) {
     if (
       (!ignore && query[key] !== product[key]) ||
       query[key] !== product[key]
@@ -103,13 +103,8 @@ async function findProducts(query, index = false) {
   // console.log({ query });
   let products = await getProductsJson();
   let productsFound = [];
-  if (Array.isArray(query)) {
-    for (let i = 0; i < products.length; i++) {
-      if (matchProduct(query, products[i])) {
-        index ? productsFound.push(i) : productsFound.push(products[i]);
-      }
-    }
-  } else if (query === "ALL") {
+
+  if (query === "ALL") {
     if (index) {
       for (let i = 0; i < products.length; i++) {
         productsFound.push(i);
@@ -117,10 +112,10 @@ async function findProducts(query, index = false) {
     } else {
       return products;
     }
-  } else if (typeof query === "string") {
-    for (const product of products) {
-      if (product.id === query) {
-        index ? productsFound.push(i) : productsFound.push(product);
+  } else {
+    for (let i = 0; i < products.length; i++) {
+      if (matchProduct(query, products[i])) {
+        index ? productsFound.push(i) : productsFound.push(products[i]);
       }
     }
   }
@@ -148,6 +143,7 @@ async function createProduct(product) {
 
   newProduct.id = randomString();
   products.push(newProduct);
+  console.log(products);
   return await fh.write(productsPath, JSON.stringify(products));
 }
 
