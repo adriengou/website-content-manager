@@ -88,10 +88,7 @@ function matchProduct(query, product, ignore = false) {
   // }
 
   for (const key in query) {
-    if (
-      (!ignore && query[key] !== product[key]) ||
-      query[key] !== product[key]
-    ) {
+    if (query[key] !== product[key]) {
       return false;
     }
   }
@@ -100,7 +97,6 @@ function matchProduct(query, product, ignore = false) {
 }
 
 async function findProducts(query, index = false) {
-  // console.log({ query });
   let products = await getProductsJson();
   let productsFound = [];
 
@@ -120,7 +116,6 @@ async function findProducts(query, index = false) {
     }
   }
 
-  console.log({ productsFound });
   return productsFound;
 }
 
@@ -169,18 +164,23 @@ async function deleteProducts(query) {
   const productsPath = path.join(config.WCM_PRODUCTS_path, "products.json");
   let products = await getProductsJson();
 
-  let indexesFound = await findProducts(query, true);
+  let indexesFound = await findProducts(query, false);
   let deletedProducts = 0;
 
-  for (let index = products.length - 1; index >= 0; index--) {
-    if (indexesFound.includes(index)) {
-      deletedProducts++;
-      products.splice(index, 1);
-    }
+  // for (let index = products.length - 1; index >= 0; index--) {
+  //   if (indexesFound.includes(index)) {
+  //     deletedProducts++;
+  //     products.splice(index, 1);
+  //   }
+  // }
+
+  for (let index = indexesFound.length - 1; index >= 0; index--) {
+    // products.splice(indexesFound[index], 1);
+    deletedProducts++;
   }
-  console.log({ indexesFound, deletedProducts });
+
   await fh.write(productsPath, JSON.stringify(products));
-  return deletedProducts;
+  return { deleted: deletedProducts };
 }
 
 export default {
