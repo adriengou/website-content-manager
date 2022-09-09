@@ -175,7 +175,7 @@ async function deleteProducts(query) {
   // }
 
   for (let index = indexesFound.length - 1; index >= 0; index--) {
-    // products.splice(indexesFound[index], 1);
+    products.splice(indexesFound[index], 1);
     deletedProducts++;
   }
 
