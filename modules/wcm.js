@@ -164,15 +164,8 @@ async function deleteProducts(query) {
   const productsPath = path.join(config.WCM_PRODUCTS_path, "products.json");
   let products = await getProductsJson();
 
-  let indexesFound = await findProducts(query, false);
+  let indexesFound = await findProducts(query, true);
   let deletedProducts = 0;
-
-  // for (let index = products.length - 1; index >= 0; index--) {
-  //   if (indexesFound.includes(index)) {
-  //     deletedProducts++;
-  //     products.splice(index, 1);
-  //   }
-  // }
 
   for (let index = indexesFound.length - 1; index >= 0; index--) {
     products.splice(indexesFound[index], 1);
