@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- <meta http-equiv="refresh" content="1" /> -->
-    <link rel="stylesheet" href="../../wcm/css/wcm_panel.css" />
+    <link rel="stylesheet" href="../../wcm/css/wcm.css" />
     <title>WCM Panel</title>
   </head>
   <body>
@@ -13,34 +13,10 @@
       <!-- Login -->
       <section id="login" class="hidden" view="/login">
         <h1 class="title">WCM</h1>
-        <p class="error hidden" id="error">Wrong password</p>
-        <form name="auth-form" action="/wcm" method="post" id="auth_form">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Mot de passe"
-            class="input"
-          />
-
-          <div class="buttons">
-            <input
-              name="submit"
-              type="submit"
-              value="Enregistrer"
-              id="register"
-              class="button"
-            />
-            <input
-              name="submit"
-              type="submit"
-              value="Se connecter"
-              id="login"
-              class="button"
-            />
-          </div>
-          <input type="hidden" name="isLogin" id="isLogin" value="true" />
-        </form>
+        <p id="login_error"></p>
+        <input type="password" name="" id="password" />
+        <button id="register">Enregistrer</button>
+        <button id="login">Se connecter</button>
       </section>
 
       <!-- Menu -->
@@ -48,14 +24,14 @@
         <button
           id="menu_to_pages_nav"
           class="menu_button nav_pages"
-          route="/pages"
+          link="/pages"
         >
           Modifier vos pages
         </button>
         <button
           id="menu_to_products_nav"
           class="menu_button nav_products"
-          route="/products"
+          link="/products"
         >
           Ajouter des produits
         </button>
@@ -63,29 +39,33 @@
 
       <!-- Page List -->
       <section id="pages" class="hidden" view="/pages">
-        <button class="nav_menu" route="/menu">Retour</button>
+        <button class="nav_menu" link="/menu">Retour</button>
         <div id="page_names" class="button_list"></div>
       </section>
 
       <!-- Products List -->
       <section id="products" class="hidden" view="/products">
-        <button class="nav_menu" route="/menu">Retour</button>
+        <button class="nav_menu" link="/menu">Retour</button>
       </section>
 
       <!-- Page Modification -->
       <section id="modif" class="hidden" view="/modif">
         <div class="modif_controls">
-          <button class="nav_pages" route="/pages">Retour</button>
+          <button class="nav_pages" link="/pages">Retour</button>
           <button class="modif_save_button">Sauvegarder</button>
           <button class="modif_cancel_button">Annuler</button>
         </div>
         <iframe id="modif_iframe" src="" frameborder="0"></iframe>
+        <div id="modif_upload_modal" class="hidden"></div>
       </section>
     </main>
 
     <!-- Templates -->
     <template id="page_name_button_temp">
-      <button class="nav_modif" route="/modif"></button>
+      <button class="nav_modif" link="/modif"></button>
+    </template>
+    <template id="img_input_template">
+      <input type="file" name="files" id="modif_img_upload" />
     </template>
     <script type="module" src="../../wcm/js/main.js"></script>
   </body>

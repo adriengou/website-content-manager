@@ -204,10 +204,6 @@ requests.deleteProducts = async function (query) {
   return await data.json();
 };
 
-await requests.login("test");
-console.log(await requests.deleteProducts({ id: "FCz8yCJDZ8X3P/z14L+rF" }));
-console.log(await requests.getProducts({ id: "FCz8yCJDZ8X3P/z14L+rF" }));
-
 export default requests;
 
 /*

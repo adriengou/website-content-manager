@@ -1,0 +1,30 @@
+section#menu {
+  box-sizing: border-box;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  gap: 300px;
+
+  padding-top: 40vh;
+
+  font-size: 2rem;
+
+  .menu_button {
+    height: 200px;
+    width: 500px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: coral;
+    border: none;
+
+    font-size: 2rem;
+  }
+}

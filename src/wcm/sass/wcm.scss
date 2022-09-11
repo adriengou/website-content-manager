@@ -1,0 +1,20 @@
+//views import
+@import "./views/_login.scss";
+@import "./views/_menu.scss";
+@import "./views/_modif.scss";
+@import "./views/_pages.scss";
+@import "./views/_products.scss";
+
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Varela Round", sans-serif;
+}
+button {
+  font-family: "Varela Round", sans-serif;
+}
+
+.hidden {
+  display: none !important;
+}

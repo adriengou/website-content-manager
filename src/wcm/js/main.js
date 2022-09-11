@@ -1,12 +1,7 @@
-import router from "./navigation.js";
+import route from "./route.js";
 import requests from "./requests.js";
-
-document.addEventListener("click", async function (e) {
-  let route = e.target.getAttribute("route");
-  if (route) {
-    await router(route);
-  }
-});
-
-console.log(requests);
-router("/menu");
+import login from "./login.js";
+import menu from "./menu.js";
+import pages from "./pages.js";
+import edit from "./edit.js";
+route("/menu");

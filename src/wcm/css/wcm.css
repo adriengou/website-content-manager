@@ -1,14 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
-body {
-  margin: 0;
-  font-family: "Varela Round", sans-serif;
-}
-
-button {
-  font-family: "Varela Round", sans-serif;
-}
-
-#menu {
+section#menu {
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;
@@ -19,8 +10,7 @@ button {
   padding-top: 40vh;
   font-size: 2rem;
 }
-
-.menu_button {
+section#menu .menu_button {
   height: 200px;
   width: 500px;
   display: flex;
@@ -31,11 +21,7 @@ button {
   font-size: 2rem;
 }
 
-.hidden {
-  display: none !important;
-}
-
-#modif {
+section#modif {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -43,25 +29,44 @@ button {
   width: 100vw;
   height: 100vh;
 }
-
-.modif_controls {
+section#modif .modif_controls {
   margin-bottom: 20px;
   z-index: 1;
   display: flex;
   gap: 5px;
 }
-
-.modif_controls button {
+section#modif .modif_controls button {
   width: 20ch;
   background-color: white;
   border: none;
   font-size: 1.1rem;
   padding: 5px 0px;
 }
-
-#modif_iframe {
+section#modif #modif_iframe {
   top: 0;
   position: absolute;
   width: 100vw;
   height: 100vh;
-}/*# sourceMappingURL=wcm_panel.css.map */
+}
+section#modif #modif_upload_modal {
+  display: flex;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.671);
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  margin: 0;
+  font-family: "Varela Round", sans-serif;
+}
+
+button {
+  font-family: "Varela Round", sans-serif;
+}
+
+.hidden {
+  display: none !important;
+}/*# sourceMappingURL=wcm.css.map */
