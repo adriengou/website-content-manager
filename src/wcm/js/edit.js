@@ -17,6 +17,9 @@ let originalHtml;
 //array of all changes
 let changes = [];
 
+//relation between file and img dom elements
+let namesAndBlobs = {};
+
 //wait for the iframe to be loaded to add event listeners
 EDIT_IFRAME.addEventListener("load", addEvents);
 
@@ -119,6 +122,7 @@ function undo() {
 
     case "image":
       lastChange.element.setAttribute("src", lastChange.oldSrc);
+
       break;
     default:
       break;
